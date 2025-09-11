@@ -1,3 +1,39 @@
+crawl:
+  respect_robots: true
+  max_pages_per_domain: 5
+  allowed_paths: ["/", "/test.html","/locations", "/book", "/schedule", "/appointments", "/careers", "/jobs", "/blog", "/news", "/press"]
+  sleep_seconds: [1.0,1.5]
+
+#confidence threshhold for trigerring outbounds Agents
+gate:
+  min_confidence: 0.6
+
+#freshness decay how scores are weighed as they age
+confidence:
+  weekly_decay: 0.85 #focusing more on recency
+  floor: 0.3 
+
+
+#enable for more recursive iin depth pages later with more compute power
+ranking:
+  enable: false
+
+
 llm:
-  model_id: meta-llama/Meta-Llama-3.1-8B-Instruct
-  device: auto
+  validator: 
+    backend: ollama  
+    model_id: llama3.2:1b 
+    device: mps         
+    dtype: float16       
+    max_new_tokens: 200
+    temperature: 0.05
+    tool_step_limit: 5
+
+  outbound:  
+    backend: ollama  
+    model_id: llama3.2:1b 
+    device: mps
+    dtype: float16
+    max_new_tokens: 300
+    temperature: 0.25
+    tool_step_limit: 4

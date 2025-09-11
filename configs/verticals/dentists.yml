@@ -1,2 +1,8 @@
 phrases:
-  expansion: ["grand opening"]
+  expansion: ["grand opening","now open","new location","opened our second","opened our third"]
+  scheduler: ["calendly","acuity","square appointments","mindbody","vagaro","fresha","setmore","booksy","opentable","resy","tock","book","schedule","appointment"]
+  hiring: ["hiring","opening","role","position","apply","careers","jobs"]
+
+outbound_style:
+  subject_prefix: "Congrats on"
+  cta: "Open to a 10-minute walkthrough next week?"
