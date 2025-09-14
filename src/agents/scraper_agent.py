@@ -79,10 +79,10 @@ def run_scraper_agent(domain: str, candidate_paths: List[str], *, llm: OllamaCha
                 messages.append({"role":"assistant","content":"No lines in response"})
                 continue
                 
-            # Look for tool calls in any line
+  
             tool_found = False
             for line in lines:
-                # Handle multiple tool calls separated by semicolons
+                
                 if ';' in line:
                     tool_calls = line.split(';')
                     for tool_call in tool_calls:
@@ -91,8 +91,7 @@ def run_scraper_agent(domain: str, candidate_paths: List[str], *, llm: OllamaCha
                             print(f"DEBUG: Tool call detected: {maybe}")
                             result = execute_tool(maybe)
                             print(f"DEBUG: Tool result: {result}")
-                            
-                            # Store the result
+                        
                             if result.get("ok") and "data" in result:
                                 if maybe["tool"] == "fetch":
                                     url = maybe["args"]["url"]
@@ -132,7 +131,7 @@ def run_scraper_agent(domain: str, candidate_paths: List[str], *, llm: OllamaCha
             if tool_found:
                 continue
                 
-            # Check for final JSON result
+           
             m = re.search(r"\{.*\}\s*$", out, flags=re.S)
             if m:
                 try:
