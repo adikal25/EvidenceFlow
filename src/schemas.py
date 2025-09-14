@@ -37,7 +37,7 @@ class ScrapeResult(BaseModel):
 class ValidateResult(BaseModel):
     ok: bool
     why: List[str] = []
-    signal_type: str                    # "expansion" | "scheduler" | "hiring"
+    signal_type: Optional[str] = None                    # "expansion" | "scheduler" | "hiring"
     evidence_url: Optional[HttpUrl] = None
     snippet: Optional[str] = None
     published_at: Optional[datetime] = None

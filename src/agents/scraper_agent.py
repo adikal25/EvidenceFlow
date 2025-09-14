@@ -22,7 +22,7 @@ EXAMPLES OF CORRECT TOOL USAGE:
 2. To extract text: {{"tool": "extract_text", "args": {{"html": "<html>...</html>"}}}}
 
 Instructions:
-1. Call fetch tool for each path you want to try
+1. Call fetch tool for each path you want to try (ONE AT A TIME)
 2. After getting responses, return the final JSON with pages and urls populated
 3. The pages should contain the HTML content you fetched
 4. The urls should contain the actual URLs you accessed
@@ -51,6 +51,10 @@ def run_scraper_agent(domain: str, candidate_paths: List[str], *, llm: OllamaCha
 
     print(f"DEBUG: Starting scraper for domain: {domain}")
     
+    # Store fetched data
+    pages = {}
+    urls = {}
+    
     for i in range(step_limit):
         try:
             print(f"DEBUG: Step {i+1}, calling LLM...")
@@ -75,22 +79,60 @@ def run_scraper_agent(domain: str, candidate_paths: List[str], *, llm: OllamaCha
                 messages.append({"role":"assistant","content":"No lines in response"})
                 continue
                 
-            # Look for tool calls in any line, not just the last one
+            # Look for tool calls in any line
             tool_found = False
             for line in lines:
-                maybe = _try_json(line)
-                if isinstance(maybe, dict) and "tool" in maybe:
-                    print(f"DEBUG: Tool call detected: {maybe}")
-                    result  = execute_tool(maybe)
-                    print(f"DEBUG: Tool result: {result}")
-                    messages.append({"role":"assistant","content": json.dumps(maybe)})
-                    messages.append({"role":"tool","content":json.dumps({"tool_result": result})})
-                    tool_found = True
-                    break
+                # Handle multiple tool calls separated by semicolons
+                if ';' in line:
+                    tool_calls = line.split(';')
+                    for tool_call in tool_calls:
+                        maybe = _try_json(tool_call.strip())
+                        if isinstance(maybe, dict) and "tool" in maybe:
+                            print(f"DEBUG: Tool call detected: {maybe}")
+                            result = execute_tool(maybe)
+                            print(f"DEBUG: Tool result: {result}")
+                            
+                            # Store the result
+                            if result.get("ok") and "data" in result:
+                                if maybe["tool"] == "fetch":
+                                    url = maybe["args"]["url"]
+                                    path = url.replace(domain, "")
+                                    if not path:
+                                        path = "/"
+                                    pages[path] = result["data"]
+                                    urls[path] = url
+                                    print(f"DEBUG: Stored page for path {path}")
+                            
+                            messages.append({"role":"assistant","content": json.dumps(maybe)})
+                            messages.append({"role":"tool","content":json.dumps({"tool_result": result})})
+                            tool_found = True
+                else:
+                    maybe = _try_json(line)
+                    if isinstance(maybe, dict) and "tool" in maybe:
+                        print(f"DEBUG: Tool call detected: {maybe}")
+                        result = execute_tool(maybe)
+                        print(f"DEBUG: Tool result: {result}")
+                        
+                        # Store the result
+                        if result.get("ok") and "data" in result:
+                            if maybe["tool"] == "fetch":
+                                url = maybe["args"]["url"]
+                                path = url.replace(domain, "")
+                                if not path:
+                                    path = "/"
+                                pages[path] = result["data"]
+                                urls[path] = url
+                                print(f"DEBUG: Stored page for path {path}")
+                        
+                        messages.append({"role":"assistant","content": json.dumps(maybe)})
+                        messages.append({"role":"tool","content":json.dumps({"tool_result": result})})
+                        tool_found = True
+                        break
                     
             if tool_found:
                 continue
                 
+            # Check for final JSON result
             m = re.search(r"\{.*\}\s*$", out, flags=re.S)
             if m:
                 try:
@@ -102,11 +144,21 @@ def run_scraper_agent(domain: str, candidate_paths: List[str], *, llm: OllamaCha
                     print(f"DEBUG: Validation error: {e}")
                     messages.append({"role":"assistant","content":out});
                     continue
+                    
             messages.append({"role":"assistant", "content": out})
         except Exception as e:
             print(f"DEBUG: Processing error: {str(e)}")
             messages.append({"role":"assistant","content":f"Processing error: {str(e)}"})
             continue
             
-    print("DEBUG: Step limit exceeded")
-    return ScrapeResult(ok=False, why=["step_limit_exceeded"])
+    # If we have collected some data, return it
+    print(f"DEBUG: Final check - pages collected: {len(pages)}")
+    print(f"DEBUG: Pages: {list(pages.keys())}")
+    print(f"DEBUG: URLs: {list(urls.keys())}")
+    
+    if pages:
+        print(f"DEBUG: Returning collected data: {len(pages)} pages")
+        return ScrapeResult(ok=True, why=[], pages=pages, urls=urls)
+    else:
+        print("DEBUG: No data collected")
+        return ScrapeResult(ok=False, why=["no_data_collected"])

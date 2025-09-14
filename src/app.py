@@ -20,14 +20,29 @@ def run_from_csv(csv_path: str, out: str, vertical: str):
             state = NodeState(domain=row["domain"])
             state.company = row.get("company")
             final_dict = graph.invoke(state)
-            # Convert back to NodeState object
             final = NodeState(**final_dict)
+            
+            
+            card_data = None
+            if final.card:
+                card_data = final.card.model_dump()
+                if 'canonical_url' in card_data:
+                    card_data['canonical_url'] = str(card_data['canonical_url'])
+                if 'first_seen' in card_data:
+                    card_data['first_seen'] = card_data['first_seen'].isoformat()
+                if 'last_seen' in card_data:
+                    card_data['last_seen'] = card_data['last_seen'].isoformat()
+            
+            email_data = None
+            if final.email:
+                email_data = final.email.model_dump()
+            
             record = {
                 "domain": row["domain"],
                 "company": row.get("company"),
                 "vertical": row.get("vertical"),
-                "card": final.card.model_dump() if final.card else None,
-                "email": final.email.model_dump() if final.email else None
+                "card": card_data,
+                "email": email_data
             }
             f_out.write(json.dumps(record) + "\n")
     print(f"Wrote {out}")
