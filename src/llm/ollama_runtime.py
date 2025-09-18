@@ -6,12 +6,12 @@ from typing import List, Dict, Any, Optional
 
 @dataclass
 class OllamaConfig:
-    model_id: str                      # e.g., "phi3.5" or "qwen2.5:7b"
+    model_id: str                      
     max_new_tokens: int = 400
     temperature: float = 0.1
-    endpoint_url: Optional[str] = None # Ollama ignores; uses OLLAMA_BASE_URL
-    device: str = "auto"               # ignored in Ollama mode
-    dtype: str = "float16"             # ignored in Ollama mode
+    endpoint_url: Optional[str] = None # uses OLLAMA_BASE_URL
+    device: str = "auto"               
+    dtype: str = "float16"            
 
 class OllamaChat:
     """
