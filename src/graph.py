@@ -91,8 +91,8 @@ def make_graph(config_path="configs/config.yml", vertical_config: dict | None = 
     patterns = (vertical_config or {}).get("phrases", {})
 
     g = StateGraph(NodeState)
-    g.add_node("scrape_node",        lambda s: scrape_node(s, llm=llm_val))
-    g.add_node("validate_node",      lambda s: validate_node(s, llm=llm_val, patterns_cfg=patterns))
+    g.add_node("scrape_node",   lambda s: scrape_node(s, llm=llm_val))
+    g.add_node("validate_node", lambda s: validate_node(s, llm=llm_val, patterns_cfg=patterns))
     g.add_node("outbound_gate", lambda s: outbound_node(s, llm=llm_out))
     g.set_entry_point("scrape_node")
     g.add_edge("scrape_node","validate_node")

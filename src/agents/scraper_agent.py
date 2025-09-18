@@ -1,5 +1,5 @@
 from pydantic import ValidationError
-from src.llm.ollama_runtime import OllamaChat, OllamaConfig
+from src.llm.ollama_runtime import OllamaChat
 
 from src.agents.tools_protocol import TOOLS_SPEC, execute_tool
 import json, re
@@ -131,7 +131,6 @@ def run_scraper_agent(domain: str, candidate_paths: List[str], *, llm: OllamaCha
             if tool_found:
                 continue
                 
-           
             m = re.search(r"\{.*\}\s*$", out, flags=re.S)
             if m:
                 try:
@@ -150,7 +149,7 @@ def run_scraper_agent(domain: str, candidate_paths: List[str], *, llm: OllamaCha
             messages.append({"role":"assistant","content":f"Processing error: {str(e)}"})
             continue
             
-    # If we have collected some data, return it
+
     print(f"DEBUG: Final check - pages collected: {len(pages)}")
     print(f"DEBUG: Pages: {list(pages.keys())}")
     print(f"DEBUG: URLs: {list(urls.keys())}")

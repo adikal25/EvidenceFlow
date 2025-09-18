@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, ValidationError
 from typing import Optional
 import json, re
-from src.llm.ollama_runtime import OllamaChat, OllamaConfig
+from src.llm.ollama_runtime import OllamaChat
 
 
 class EmailDraft(BaseModel):
@@ -50,7 +50,6 @@ def draft_from_card(llm: OllamaChat, *, company: str, domain: str, signal_type: 
     out = llm.chat(messages).strip()
     print(f"DEBUG OUTBOUND: LLM response: {out[:200]}...")
     
-    # Try to find JSON in the response
     json_match = re.search(r'\{[^{}]*"subject"[^{}]*\}', out, re.DOTALL)
     if json_match:
         try:
@@ -60,7 +59,7 @@ def draft_from_card(llm: OllamaChat, *, company: str, domain: str, signal_type: 
         except (json.JSONDecodeError, ValidationError) as e:
             print(f"DEBUG OUTBOUND: JSON parse error: {e}")
     
-    # Fallback: try the original pattern
+    # fallback pattern
     m = re.search(r"\{.*\}\s*$", out, flags=re.S)
     if m:
         try:

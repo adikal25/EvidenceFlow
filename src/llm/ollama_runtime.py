@@ -43,7 +43,6 @@ class OllamaChat:
         r.raise_for_status()
         data = r.json()
 
-        # Common Ollama response formats
         if isinstance(data, dict):
             if "message" in data and isinstance(data["message"], dict):
                 return data["message"].get("content", "")

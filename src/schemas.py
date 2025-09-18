@@ -31,13 +31,13 @@ class EvidenceCard(BaseModel):
 class ScrapeResult(BaseModel):
     ok: bool
     why: List[str] = []
-    pages: Dict[str, str] = {}          # path -> html
-    urls: Dict[str, HttpUrl] = {}       # path -> absolute url
+    pages: Dict[str, str] = {}         
+    urls: Dict[str, HttpUrl] = {}       
 
 class ValidateResult(BaseModel):
     ok: bool
     why: List[str] = []
-    signal_type: Optional[str] = None                    # "expansion" | "scheduler" | "hiring"
+    signal_type: Optional[str] = None                  
     evidence_url: Optional[HttpUrl] = None
     snippet: Optional[str] = None
     published_at: Optional[datetime] = None

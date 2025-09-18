@@ -45,7 +45,6 @@ def run_from_csv(csv_path: str, out: str, vertical: str):
                 "email": email_data
             }
             f_out.write(json.dumps(record) + "\n")
-    print(f"Wrote {out}")
 
 def main():
     ap = argparse.ArgumentParser()
