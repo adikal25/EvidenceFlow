@@ -46,10 +46,10 @@ def run_validator_agent(
             print(f"DEBUG VALIDATOR: Extracted text for {path}: {text[:100]}...")
         except Exception as e:
             print(f"DEBUG VALIDATOR: Error extracting text from {path}: {e}")
-            text_pages[path] = html  # fallback to HTML
+            text_pages[path] = html  
     
     hints = json.dumps(patterns, indent=2)
-    pages_condensed = "\n".join([f"PATH: {p}\nTEXT:\n{text_pages[p][:2000]}" for p in text_pages])  # truncate
+    pages_condensed = "\n".join([f"PATH: {p}\nTEXT:\n{text_pages[p][:2000]}" for p in text_pages])  
     
     messages = [
         {"role":"system","content":SYSTEM},
@@ -84,7 +84,6 @@ def run_validator_agent(
                 messages.append({"role":"assistant","content":out}); 
                 continue
         
-        # Also try the original pattern
         m = re.search(r"\{.*\}\s*$", out, flags=re.S)
         if m:
             try:

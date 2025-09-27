@@ -3,6 +3,8 @@ import re
 from datetime import datetime,timezone
 EXPLICIT = re.compile(r"(grand\s*opening|now\s*open|new\s*location|opened\s*(our\s*)?(second|third))", re.I)
 ADDRLIKE = re.compile(r"\d{2,5}\s+\w+", re.I)
+
+
 def freshness_weight(published_at, weekly_decay=0.85, floor=0.3):
     """Calculate freshness weight based on publication date with weekly decay."""
     if not published_at: 
