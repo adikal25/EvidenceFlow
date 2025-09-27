@@ -1,4 +1,4 @@
-# scoring heurostics on how good the agent is
+# scoring heuristics on how good the agent is
 import re
 from datetime import datetime,timezone
 EXPLICIT = re.compile(r"(grand\s*opening|now\s*open|new\s*location|opened\s*(our\s*)?(second|third))", re.I)
