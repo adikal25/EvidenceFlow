@@ -3,7 +3,7 @@ from typing import Dict, List
 from pydantic import ValidationError
 from src.llm.ollama_runtime import OllamaChat
 from src.schemas import ValidateResult
-from src.tools.parsing import extract_text
+from src.tools.web import extract_text
 
 SYSTEM = f"""
 You are a verification agent. You will receive text content from web pages.

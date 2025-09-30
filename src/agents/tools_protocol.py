@@ -1,8 +1,8 @@
 # Tools protocol
 from typing import Dict, Any
 from src.tools.web import fetch
-from src.tools.parsing import extract_text, sentences
-from src.tools.parsing import extract_date as get_meta_dates
+from src.tools.web import extract_text, sentences
+from src.tools.web import extract_date as get_meta_dates
 
 TOOLS_SPEC = """
 TOOLS USAGE:

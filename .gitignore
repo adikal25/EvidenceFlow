@@ -2,12 +2,6 @@
 .venv/
 venv/
 env/
-**/.venv/
-**/venv/
-**/env/
-ENV/
-envs/
-venv-*/
 
 # Python
 __pycache__/

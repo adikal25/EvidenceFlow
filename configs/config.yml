@@ -6,11 +6,11 @@ crawl:
 
 #confidence threshhold for trigerring outbounds Agents
 gate:
-  min_confidence: 0.6
+  min_confidence: 0.4
 
 #freshness decay how scores are weighed as they age
 confidence:
-  weekly_decay: 0.85 #focusing more on recency
+  weekly_decay: 0.65 #focusing more on recency
   floor: 0.3 
 
 
@@ -26,7 +26,7 @@ llm:
     device: mps         
     dtype: float16       
     max_new_tokens: 200
-    temperature: 0.05
+    temperature: 0.03
     tool_step_limit: 5
 
   outbound:  
@@ -35,5 +35,5 @@ llm:
     device: mps
     dtype: float16
     max_new_tokens: 300
-    temperature: 0.25
+    temperature: 0.35
     tool_step_limit: 4

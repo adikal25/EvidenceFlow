@@ -43,7 +43,8 @@ def validate_node(state: NodeState, llm: OllamaChat, patterns_cfg: dict) -> Node
     }
     print(f"DEBUG GRAPH: Patterns: {PATS}")
     
-    vr = run_validator_agent(state.domain, state.scrape_result.pages, state.scrape_result.urls, PATS, llm=llm, step_limit=4)
+    urls_str = {k: str(v) for k, v in state.scrape_result.urls.items()} if state.scrape_result and state.scrape_result.urls else {}
+    vr = run_validator_agent(state.domain, state.scrape_result.pages, urls_str, PATS, llm=llm, step_limit=4)
     print(f"DEBUG GRAPH: Validation result: {vr}")
     state.validate_result = vr
     
@@ -91,9 +92,9 @@ def make_graph(config_path="configs/config.yml", vertical_config: dict | None = 
     patterns = (vertical_config or {}).get("phrases", {})
 
     g = StateGraph(NodeState)
-    g.add_node("scrape_node",   lambda s: scrape_node(s, llm=llm_val))
-    g.add_node("validate_node", lambda s: validate_node(s, llm=llm_val, patterns_cfg=patterns))
-    g.add_node("outbound_gate", lambda s: outbound_node(s, llm=llm_out))
+    g.add_node("scrape_node",   lambda s: scrape_node(s, llm=llm_val)) # type: ignore
+    g.add_node("validate_node", lambda s: validate_node(s, llm=llm_val, patterns_cfg=patterns)) # type: ignore
+    g.add_node("outbound_gate", lambda s: outbound_node(s, llm=llm_out)) # pyright: ignore[reportArgumentType]
     g.set_entry_point("scrape_node")
     g.add_edge("scrape_node","validate_node")
     g.add_edge("validate_node","outbound_gate")
