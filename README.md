@@ -25,7 +25,6 @@ Each signal is wrapped into an **Evidence Card**, then passed to an **Outbound A
   - Confidence weighting with **freshness decay**
 - **Automatic email draft generation** tied to detected signals  
 - **Configurable via YAML** (`configs/config.yml`)  
-- **Optional front‑end**: `demo.html` for visualizing cards & emails
 
 # Tech Stack
 
@@ -34,9 +33,8 @@ Each signal is wrapped into an **Evidence Card**, then passed to an **Outbound A
 - **Schemas:** Pydantic  
 - **Scraping:** Requests + BeautifulSoup4 (via `tools/`)  
 - **Validation:** Regex patterns + freshness‑decay scoring  
-- **Embeddings / Reranker (optional):** `BAAI/bge-m3`, `bge-reranker`  
-- **UI (optional):** HTML demo page (`demo.html`)
-
+- **Embeddings / Reranker (optional):** `BAAI/bge-m3`, `bge-reranker`
+  
 # Setup
 
 ## 1. Clone repo
