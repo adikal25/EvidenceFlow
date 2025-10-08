@@ -153,6 +153,7 @@ Run the pipeline again—expect a populated **Evidence Card** and **email draft*
 
 # Future Improvements
 
+- **Create a Natural language understanding interface** with pre defined **ICP**
 - **Semantic scoring** with FAISS + reranker  
 - **Streamlit dashboard** to visualize Evidence Cards & drafts  
 - **CRM/marketing integrations** for automated workflows
