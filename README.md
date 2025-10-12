@@ -29,7 +29,7 @@ Each signal is wrapped into an **Evidence Card**, then passed to an **Outbound A
 # Tech Stack
 
 - **Agents:** LangGraph (StateGraph orchestration)  
-- **LLM Runtime:** Ollama (local models like `phi3.5`, `llama3.1`)  
+- **LLM Runtime:** Ollama (local models like `phi3.5`, `llama3.1`) depends on your RAM. 
 - **Schemas:** Pydantic  
 - **Scraping:** Requests + BeautifulSoup4 (via `tools/`)  
 - **Validation:** Regex patterns + freshness‑decay scoring  
