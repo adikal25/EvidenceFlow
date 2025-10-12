@@ -97,10 +97,11 @@ python -m src.app --csv data/test_sites.csv --vertical dentists --out data/resul
 
 # Testing
 
-Create a test HTML page with strong signals:
+Create a test HTML page with signals for testing:
 
 ```html
-<h1>Grand Opening! Now Open our new clinic in Dallas</h1>
+Example:
+<h1>Grand Opening! Now Open our new clinic in Cary</h1>
 <p>Book an appointment today!</p>
 <p>We are hiring staff for our new team.</p>
 ```
