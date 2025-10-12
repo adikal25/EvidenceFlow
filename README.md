@@ -158,10 +158,6 @@ Run the pipeline again—expect a populated **Evidence Card** and **email draft*
 - **Streamlit dashboard** to visualize Evidence Cards & drafts  
 - **CRM/marketing integrations** for automated workflows
 
-# License
-
-MIT — feel free to use, extend, and improve.
-
 # Appendix
 
 ## Example Directory Layout
