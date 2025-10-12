@@ -77,12 +77,12 @@ confidence:
 
 llm:
   validator:
-    model_id: phi3.5
+    model_id: llama:3.1 1B
     backend: ollama
     max_new_tokens: 200
     temperature: 0.05
   outbound:
-    model_id: phi3.5
+    model_id: llama:3.1 1B
     backend: ollama
     max_new_tokens: 300
     temperature: 0.25
