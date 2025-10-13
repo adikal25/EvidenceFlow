@@ -1,17 +1,5 @@
 # Demo
-<<<<<<< HEAD
 
-**Test HTML page**
-
-<img width="596" height="239" alt="Screenshot 2025-10-12 at 16 34 11" src="https://github.com/user-attachments/assets/ab79fb95-fb06-4e89-be90-c809d451255d" />
-
-**Prototype UI for testing**
-
-<img width="1503" height="754" alt="Screenshot 2025-09-30 at 12 19 17" src="https://github.com/user-attachments/assets/9207e250-af40-4b35-89c2-f42d5b059e38" />
-
-**Outbound email**
-
-=======
 **Test.html page**
 <img width="1096" height="239" alt="Screenshot 2025-10-12 at 16 34 11" src="https://github.com/user-attachments/assets/ab79fb95-fb06-4e89-be90-c809d451255d" />
 
@@ -19,7 +7,6 @@
 <img width="1503" height="754" alt="Screenshot 2025-09-30 at 12 19 17" src="https://github.com/user-attachments/assets/9207e250-af40-4b35-89c2-f42d5b059e38" />
 
 **Outbound Email**
->>>>>>> a315b343e7b896c96b2cbc55212fee67defeb052
 <img width="1065" height="806" alt="Screenshot 2025-09-30 at 12 21 50" src="https://github.com/user-attachments/assets/f8825277-c3ff-47d4-8673-8ff93eb70c97" />
 
 
@@ -50,11 +37,7 @@ evaluated by the **validator agent** , then passed to an **Outbound Agent** that
 # Tech Stack
 
 - **Agents:** LangGraph (StateGraph orchestration)  
-<<<<<<< HEAD
-- **LLM Runtime:** Ollama (local models like `llama3.2:1b`; pick the size that fits your hardware)
-=======
 - **LLM Runtime:** Ollama (local models like `phi3.5`, `llama3.1`)  #This prototype uses llama3.1 1B param model pulled using ollama.
->>>>>>> a315b343e7b896c96b2cbc55212fee67defeb052
 - **Schemas:** Pydantic  
 - **Scraping:** Requests + BeautifulSoup4 (via `tools/`)  
 - **Validation:** Regex patterns + freshness‑decay scoring  
@@ -82,7 +65,7 @@ pip install -r requirements.txt
 - Pull a model (e.g., **llama3.2:1b**) you can plug and play with the models.
 
 ```bash
-ollama pull phi3.5
+ollama pull llama3.2:1b
 ```
 
 Ensure server is running locally at <http://localhost:11434>.
@@ -101,20 +84,12 @@ confidence:
 
 llm:
   validator:
-<<<<<<< HEAD
     model_id: llama3.2:1b
-=======
-    model_id: llama3.2:1b 
->>>>>>> a315b343e7b896c96b2cbc55212fee67defeb052
     backend: ollama
     max_new_tokens: 200
     temperature: 0.05
   outbound:
-<<<<<<< HEAD
     model_id: llama3.2:1b
-=======
-    model_id: llama3.2:1b 
->>>>>>> a315b343e7b896c96b2cbc55212fee67defeb052
     backend: ollama
     max_new_tokens: 300
     temperature: 0.25
@@ -123,14 +98,10 @@ llm:
 ## 5. Run pipeline
 
 ```bash
-python -m src.app --csv data/test_sites.csv --vertical #vertical_name --out data/results.jsonl
+python -m src.app --csv data/test_sites.csv --vertical #vertical_name --out data/results.jsonl (or results.json)
 ```
 
 # Testing
-<<<<<<< HEAD
-
-=======
->>>>>>> a315b343e7b896c96b2cbc55212fee67defeb052
 Create a test HTML page with signals:
 
 ```html
@@ -188,17 +159,9 @@ Run the pipeline again—expect a populated **Evidence Card** and **email draft*
 - **Ollama** enables local inference for validator and outbound generation, minimizing cost and maximizing privacy.
 
 # Future Improvements
-
-<<<<<<< HEAD
-- **Natural language understanding interface** that maps user prompts to predefined ICPs across common verticals
-- **Semantic scoring** with FAISS retrieval plus a reranker (still under evaluation)
-- **Streamlit dashboard** enhancements to visualize Evidence Cards and drafts
-- **CRM/marketing integrations** for automated outreach workflows
-=======
 - (ongoing) **Create a Natural language understanding interface** that maps user prompts to pre-defined **ICPs** across common verticals.
 - **Semantic scoring** with FAISS + reranker (still rethinking on how to go about it)
 - **CRM/marketing integrations** for automated workflows.
->>>>>>> a315b343e7b896c96b2cbc55212fee67defeb052
 
 # Appendix
 
@@ -211,7 +174,7 @@ Run the pipeline again—expect a populated **Evidence Card** and **email draft*
 ├── data/
 │   ├── test_sites.csv
 │   └── results.jsonl
-├── demo.html
+├── index.html
 ├── requirements.txt
 ├── src/
 │   ├── app.py
