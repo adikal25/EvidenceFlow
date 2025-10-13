@@ -12,6 +12,7 @@
 # Overview
 
 This project is a **prototype AI Agent Stack** for detecting **business activity signals** on SMB websites. It focuses on three high‑value triggers:
+Please refer **flow.md** for codeflow and schemas.
 
 - **Expansion** → “Grand Opening”, “New Location”  
 - **Hiring** → careers/job postings  
