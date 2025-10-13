@@ -165,10 +165,9 @@ This is a **Signal Prototype Agent** that automatically detects business signals
 ### **`fetch(url, timeout, sleep_window)`**
 - **Purpose**: Fetches web pages with rate limiting
 - **Function**:
-  1. Checks robots.txt compliance
-  2. Adds random delay to avoid rate limiting
-  3. Makes HTTP request with proper headers
-  4. Returns HTML content
+  1. Adds random delay to avoid rate limiting
+  2. Makes HTTP request with proper headers
+  3. Returns HTML content
 
 ### **`allow_fetch(url)`**
 - **Purpose**: Checks if URL is allowed by robots.txt
@@ -210,7 +209,7 @@ CSV → NodeState → LangGraph → Agent1 → LLM → JSON Response → Agent2 
 - **Multi-agent architecture** with specialized agents
 - **LLM-powered decision making** at each step
 - **Confidence scoring** with freshness weighting
-- **Robust error handling** and fallbacks
+- **Designed for error handling** and fallbacks
 - **JSON-serializable output** for integration
 - **Configurable patterns** per vertical/industry
 

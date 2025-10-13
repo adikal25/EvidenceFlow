@@ -1,4 +1,5 @@
-# Evidence flow Demo
+# Demo
+<img width="596" height="239" alt="Screenshot 2025-10-12 at 16 34 11" src="https://github.com/user-attachments/assets/ab79fb95-fb06-4e89-be90-c809d451255d" />
 <img width="1503" height="754" alt="Screenshot 2025-09-30 at 12 19 17" src="https://github.com/user-attachments/assets/9207e250-af40-4b35-89c2-f42d5b059e38" />
 <img width="1065" height="806" alt="Screenshot 2025-09-30 at 12 21 50" src="https://github.com/user-attachments/assets/f8825277-c3ff-47d4-8673-8ff93eb70c97" />
 
@@ -30,7 +31,11 @@ evaluated by the **validator agent** , then passed to an **Outbound Agent** that
 # Tech Stack
 
 - **Agents:** LangGraph (StateGraph orchestration)  
+<<<<<<< HEAD
 - **LLM Runtime:** Ollama (local models like `phi3.5`, `llama3.1`)  #This prototype uses llama3.1 1B param model.
+=======
+- **LLM Runtime:** Ollama (local models like `phi3.5`, `llama3.1`) depends on your RAM. 
+>>>>>>> f90e3ad3b108b2b0ac5c246e024d981cfa885d94
 - **Schemas:** Pydantic  
 - **Scraping:** Requests + BeautifulSoup4 (via `tools/`)  
 - **Validation:** Regex patterns + freshness‑decay scoring  
@@ -77,12 +82,20 @@ confidence:
 
 llm:
   validator:
+<<<<<<< HEAD
     model_id: llama3.2:1b 
+=======
+    model_id: llama:3.1 1B
+>>>>>>> f90e3ad3b108b2b0ac5c246e024d981cfa885d94
     backend: ollama
     max_new_tokens: 200
     temperature: 0.05
   outbound:
+<<<<<<< HEAD
     model_id: llama3.2:1b 
+=======
+    model_id: llama:3.1 1B
+>>>>>>> f90e3ad3b108b2b0ac5c246e024d981cfa885d94
     backend: ollama
     max_new_tokens: 300
     temperature: 0.25
@@ -96,10 +109,15 @@ python -m src.app --csv data/test_sites.csv --vertical #vertical_name --out data
 
 # Testing
 
+<<<<<<< HEAD
 Create a test HTML page with signals:
+=======
+Create a test HTML page with signals for testing:
+>>>>>>> f90e3ad3b108b2b0ac5c246e024d981cfa885d94
 
 ```html
-<h1>Grand Opening! Now Open our new clinic in Dallas</h1>
+Example:
+<h1>Grand Opening! Now Open our new clinic in Cary</h1>
 <p>Book an appointment today!</p>
 <p>We are hiring staff for our new team.</p>
 ```
@@ -153,6 +171,7 @@ Run the pipeline again—expect a populated **Evidence Card** and **email draft*
 
 # Future Improvements
 
+- **Create a Natural language understanding interface** with pre defined **ICP**
 - **Semantic scoring** with FAISS + reranker  
 - **Streamlit dashboard** to visualize Evidence Cards & drafts  
 - **CRM/marketing integrations** for automated workflows
