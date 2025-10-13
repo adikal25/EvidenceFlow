@@ -1,6 +1,9 @@
 # Demo
+**Test.html page**
 <img width="596" height="239" alt="Screenshot 2025-10-12 at 16 34 11" src="https://github.com/user-attachments/assets/ab79fb95-fb06-4e89-be90-c809d451255d" />
+**Prototype UI for testing**
 <img width="1503" height="754" alt="Screenshot 2025-09-30 at 12 19 17" src="https://github.com/user-attachments/assets/9207e250-af40-4b35-89c2-f42d5b059e38" />
+**Outbound Email**
 <img width="1065" height="806" alt="Screenshot 2025-09-30 at 12 21 50" src="https://github.com/user-attachments/assets/f8825277-c3ff-47d4-8673-8ff93eb70c97" />
 
 
