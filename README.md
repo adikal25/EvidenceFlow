@@ -12,8 +12,6 @@
 # Overview
 
 This project is a **prototype AI Agent Stack** for detecting **business activity signals** on SMB websites. It focuses on three high‑value triggers:
-Please refer **flow.md** for codeflow and schemas.
-
 - **Expansion** → “Grand Opening”, “New Location”  
 - **Hiring** → careers/job postings  
 - **Scheduler** → Calendly / Acuity / “Book Appointment”  
@@ -22,6 +20,7 @@ Each signal collected by the **Scraper Agent** is wrapped into an Evidence Card
 evaluated by the **validator agent** , then passed to an **Outbound Agent** that drafts a personalized email.(only if the score passes above the fixed threshold value)
 
 **Goal.** Help sales and marketing teams discover timely triggers that indicate a business is actively growing and worth contacting now.
+**Please refer **flow.md** for codeflow and schemas.**
 
 # Features
 
