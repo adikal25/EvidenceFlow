@@ -82,20 +82,12 @@ confidence:
 
 llm:
   validator:
-<<<<<<< HEAD
     model_id: llama3.2:1b 
-=======
-    model_id: llama:3.1 1B
->>>>>>> f90e3ad3b108b2b0ac5c246e024d981cfa885d94
     backend: ollama
     max_new_tokens: 200
     temperature: 0.05
   outbound:
-<<<<<<< HEAD
     model_id: llama3.2:1b 
-=======
-    model_id: llama:3.1 1B
->>>>>>> f90e3ad3b108b2b0ac5c246e024d981cfa885d94
     backend: ollama
     max_new_tokens: 300
     temperature: 0.25
@@ -108,12 +100,7 @@ python -m src.app --csv data/test_sites.csv --vertical #vertical_name --out data
 ```
 
 # Testing
-
-<<<<<<< HEAD
 Create a test HTML page with signals:
-=======
-Create a test HTML page with signals for testing:
->>>>>>> f90e3ad3b108b2b0ac5c246e024d981cfa885d94
 
 ```html
 Example:
@@ -178,7 +165,7 @@ Run the pipeline again—expect a populated **Evidence Card** and **email draft*
 
 # Appendix
 
-## Example Directory Layout
+## Directory Layout
 
 ```text
 .
