@@ -1,5 +1,5 @@
 crawl:
-  respect_robots: true
+  #respect_robots: true
   max_pages_per_domain: 5
   allowed_paths: ["/", "/test.html","/locations", "/book", "/schedule", "/appointments", "/careers", "/jobs", "/blog", "/news", "/press"]
   sleep_seconds: [1.0,1.5]

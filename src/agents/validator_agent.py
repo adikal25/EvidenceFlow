@@ -72,30 +72,61 @@ def run_validator_agent(
             messages.append({"role":"assistant","content":f"LLM error: {str(e)}"})
             continue
             
-        # Look for JSON in the response
-        json_match = re.search(r'\{[^{}]*"ok"[^{}]*\}', out, re.DOTALL)
-        if json_match:
+        clean = out.strip()
+        if clean.startswith("```"):
+            # Peel off common markdown fences before extracting JSON payload
+            parts = [part.strip() for part in clean.split("```") if part.strip()]
+            json_chunks = [chunk for chunk in parts if chunk.startswith("{") and "}" in chunk]
+            if json_chunks:
+                clean = json_chunks[0]
+
+        def _iter_json_candidates(text: str):
+            if text.startswith("{") and text.endswith("}"):
+                yield text
+            for match in re.finditer(r'"ok"\s*:', text):
+                brace_start = text.rfind("{", 0, match.start())
+                if brace_start == -1:
+                    continue
+                depth = 0
+                in_string = False
+                escape = False
+                for idx in range(brace_start, len(text)):
+                    ch = text[idx]
+                    if in_string:
+                        if escape:
+                            escape = False
+                        elif ch == "\\":
+                            escape = True
+                        elif ch == '"':
+                            in_string = False
+                        continue
+                    else:
+                        if ch == '"':
+                            in_string = True
+                        elif ch == "{":
+                            depth += 1
+                        elif ch == "}":
+                            depth -= 1
+                            if depth == 0:
+                                yield text[brace_start:idx+1]
+                                break
+
+        tried = set()
+        for candidate in _iter_json_candidates(clean):
+            if candidate in tried:
+                continue
+            tried.add(candidate)
+            if '"ok"' not in candidate:
+                continue
             try:
-                result = ValidateResult.model_validate_json(json_match.group(0))
+                result = ValidateResult.model_validate_json(candidate)
                 print(f"DEBUG VALIDATOR: Valid result: {result}")
                 return result
             except ValidationError as e:
-                print(f"DEBUG VALIDATOR: Validation error: {e}")
-                messages.append({"role":"assistant","content":out}); 
-                continue
-        
-        m = re.search(r"\{.*\}\s*$", out, flags=re.S)
-        if m:
-            try:
-                result = ValidateResult.model_validate_json(m.group(0))
-                print(f"DEBUG VALIDATOR: Valid result: {result}")
-                return result
-            except ValidationError as e:
-                print(f"DEBUG VALIDATOR: Validation error: {e}")
-                messages.append({"role":"assistant","content":out}); 
-                continue
-                
+                print(f"DEBUG VALIDATOR: Validation error for candidate: {e}")
+
         messages.append({"role":"assistant","content":out})
+        messages.append({"role":"user","content":"Please respond with ONLY the final JSON object matching the schema ({\"ok\": ..., \"signal_type\": ..., ...})."})
     
     print("DEBUG VALIDATOR: Step limit exceeded")
     return ValidateResult(ok=False, why=["step_limit_exceeded"])

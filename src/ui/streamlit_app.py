@@ -16,7 +16,8 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def find_results() -> Path:
-    candidates = [ROOT / "results.jsonl", ROOT / "data" / "results.jsonl"]
+    candidates = [ROOT / "data" /"results.json",
+                  ROOT / "data" / "results.jsonl"]
     for p in candidates:
         if p.exists():
             return p
