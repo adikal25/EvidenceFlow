@@ -31,11 +31,7 @@ evaluated by the **validator agent** , then passed to an **Outbound Agent** that
 # Tech Stack
 
 - **Agents:** LangGraph (StateGraph orchestration)  
-<<<<<<< HEAD
-- **LLM Runtime:** Ollama (local models like `phi3.5`, `llama3.1`)  #This prototype uses llama3.1 1B param model.
-=======
-- **LLM Runtime:** Ollama (local models like `phi3.5`, `llama3.1`) depends on your RAM. 
->>>>>>> f90e3ad3b108b2b0ac5c246e024d981cfa885d94
+- **LLM Runtime:** Ollama (local models like `phi3.5`, `llama3.1`)  #This prototype uses llama3.1 1B param model pulled using ollama.
 - **Schemas:** Pydantic  
 - **Scraping:** Requests + BeautifulSoup4 (via `tools/`)  
 - **Validation:** Regex patterns + freshness‑decay scoring  
@@ -156,12 +152,11 @@ Run the pipeline again—expect a populated **Evidence Card** and **email draft*
 - **Pydantic** enforces strict schemas for Evidence Cards and email payloads.
 - **Ollama** enables local inference for validator and outbound generation, minimizing cost and maximizing privacy.
 
-# Future Improvements
+# Future Improvements(Currently reiterating on how to best fit in)
 
-- **Create a Natural language understanding interface** with pre defined **ICP**
-- **Semantic scoring** with FAISS + reranker  
-- **Streamlit dashboard** to visualize Evidence Cards & drafts  
-- **CRM/marketing integrations** for automated workflows
+- **Create a Natural language understanding interface** that maps user prompts to pre-defined **ICPs** across common verticals.
+- **Semantic scoring** with FAISS + reranker (still rethinking on how to go about it)
+- **CRM/marketing integrations** for automated workflows.
 
 # Appendix
 
