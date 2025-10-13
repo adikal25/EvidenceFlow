@@ -1,3 +1,5 @@
+# In this outbound email drafting module, we define the EmailDraft model and the draft_from_card function.
+# The function uses an LLM to generate a concise email based on the provided signal information.
 from pydantic import BaseModel, Field, ValidationError
 from typing import Optional
 import json
@@ -54,7 +56,7 @@ def draft_from_card(llm: OllamaChat, *, company: str, domain: str, signal_type: 
 
     out = llm.chat(messages).strip()
     print(f"DEBUG OUTBOUND: LLM response: {out[:200]}...")
-    # helper: replace common example placeholders (X, xxx, xx) with the real company
+    
     placeholder_pattern = re.compile(r"\b(?:X|xxx|xx)\b", flags=re.IGNORECASE)
 
     def _replace_placeholders_in_data(data_dict: dict, company_name: str):
@@ -68,9 +70,7 @@ def draft_from_card(llm: OllamaChat, *, company: str, domain: str, signal_type: 
         return data_dict
 
     def _sanitize_json_like_string(s: str) -> str:
-        # Escape raw newline and carriage return characters that appear inside
-        # JSON string literals but are not escaped. This often happens when the LLM
-        # returns pretty-printed or unescaped newlines inside quotes.
+
         out_chars = []
         in_str = False
         escape = False
@@ -101,7 +101,6 @@ def draft_from_card(llm: OllamaChat, *, company: str, domain: str, signal_type: 
             return EmailDraft.model_validate(data)
         except (json.JSONDecodeError, ValidationError) as e:
             print(f"DEBUG OUTBOUND: JSON parse error: {e}")
-            # Try sanitizing the JSON-like string (escape raw newlines inside quoted strings)
             try:
                 sanitized = _sanitize_json_like_string(json_match.group(0))
                 print(

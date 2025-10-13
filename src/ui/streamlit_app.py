@@ -1,4 +1,4 @@
-"""Minimal Streamlit UI for Data Validation Agent
+"""Minimal Streamlit UI for for prototype architecture
 
 Run with:
     streamlit run src/ui/streamlit_app.py
@@ -41,8 +41,8 @@ def read_jsonl(path: Path) -> List[dict]:
 
 def main() -> None:
     st.set_page_config(
-        page_title="Data Validation — Streamlit UI", layout="wide")
-    st.title("Data Validation Agent — Results")
+        page_title=" — Signal Proto Streamlit UI", layout="wide")
+    st.title("Signal Proto — Results")
 
     results_path = find_results()
     st.sidebar.markdown("### Source")
@@ -91,7 +91,7 @@ def main() -> None:
         with col2:
             st.markdown("**Email**")
             st.json(r.get("email") or {})
-            # Gmail compose link (open compose window with subject & body prefilled)
+            # Gmail compose link with prefilled subject/body i.e ready to send email
             email = r.get("email") or {}
             subject = email.get("subject") if email.get(
                 "subject") else f"Quick idea after {r.get('company') or ''} recent update"
@@ -111,7 +111,6 @@ def main() -> None:
                 return f"https://mail.google.com/mail/?{qs}"
 
             url = gmail_compose_url(subject, body) # type: ignore
-            # small Gmail icon SVG
             gmail_svg = """
 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M22 6.5v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-11'/><path d='M22 6.5 12 13 2 6.5'/></svg>
 """

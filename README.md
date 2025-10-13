@@ -11,7 +11,8 @@ This project is a **prototype AI Agent Stack** for detecting **business activity
 - **Hiring** → careers/job postings  
 - **Scheduler** → Calendly / Acuity / “Book Appointment”  
 
-Each signal is wrapped into an **Evidence Card**, then passed to an **Outbound Agent** that drafts a personalized email.
+Each signal collected by the **Scraper Agent** is wrapped into an Evidence Card
+evaluated by the **validator agent** , then passed to an **Outbound Agent** that drafts a personalized email.(only if the score passes above the fixed threshold value)
 
 **Goal.** Help sales and marketing teams discover timely triggers that indicate a business is actively growing and worth contacting now.
 
@@ -19,7 +20,7 @@ Each signal is wrapped into an **Evidence Card**, then passed to an **Outbound A
 
 - **Multi‑agent pipeline** with LangGraph orchestration  
 - **Modular design** with Pydantic schemas  
-- **Local inference with Ollama** (no API costs)  
+- **Local inference with Ollama**  
 - **Scoring heuristics**
   - Regex‑based intent detection
   - Confidence weighting with **freshness decay**
@@ -29,11 +30,10 @@ Each signal is wrapped into an **Evidence Card**, then passed to an **Outbound A
 # Tech Stack
 
 - **Agents:** LangGraph (StateGraph orchestration)  
-- **LLM Runtime:** Ollama (local models like `phi3.5`, `llama3.1`)  
+- **LLM Runtime:** Ollama (local models like `phi3.5`, `llama3.1`)  #This prototype uses llama3.1 1B param model.
 - **Schemas:** Pydantic  
 - **Scraping:** Requests + BeautifulSoup4 (via `tools/`)  
 - **Validation:** Regex patterns + freshness‑decay scoring  
-- **Embeddings / Reranker (optional):** `BAAI/bge-m3`, `bge-reranker`
   
 # Setup
 
@@ -55,7 +55,7 @@ pip install -r requirements.txt
 ## 3. Install & run Ollama
 
 - Download **Ollama**  
-- Pull a model (e.g., **Phi‑3.5 Mini**) you can plug and play with the models:
+- Pull a model (e.g., **llama3.2:1b**) you can plug and play with the models.
 
 ```bash
 ollama pull phi3.5
@@ -77,12 +77,12 @@ confidence:
 
 llm:
   validator:
-    model_id: phi3.5
+    model_id: llama3.2:1b 
     backend: ollama
     max_new_tokens: 200
     temperature: 0.05
   outbound:
-    model_id: phi3.5
+    model_id: llama3.2:1b 
     backend: ollama
     max_new_tokens: 300
     temperature: 0.25
@@ -91,12 +91,12 @@ llm:
 ## 5. Run pipeline
 
 ```bash
-python -m src.app --csv data/test_sites.csv --vertical dentists --out data/results.jsonl
+python -m src.app --csv data/test_sites.csv --vertical #vertical_name --out data/results.jsonl
 ```
 
 # Testing
 
-Create a test HTML page with strong signals:
+Create a test HTML page with signals:
 
 ```html
 <h1>Grand Opening! Now Open our new clinic in Dallas</h1>
@@ -157,10 +157,6 @@ Run the pipeline again—expect a populated **Evidence Card** and **email draft*
 - **Streamlit dashboard** to visualize Evidence Cards & drafts  
 - **CRM/marketing integrations** for automated workflows
 
-# License
-
-MIT — feel free to use, extend, and improve.
-
 # Appendix
 
 ## Example Directory Layout
@@ -182,25 +178,11 @@ MIT — feel free to use, extend, and improve.
 └── README.Rmd
 ```
 
-## Evidence Card (Pydantic) — illustrative schema
-
-```python
-from pydantic import BaseModel, HttpUrl
-from typing import Literal, Optional
-
-class EvidenceCard(BaseModel):
-    signal_type: Literal["expansion", "hiring", "scheduler"]
-    canonical_url: Optional[HttpUrl] = None
-    snippet: str
-    confidence: float
-    explain: str
-```
-
 ## CLI Usage
 
 ```bash
 python -m src.app \\
   --csv data/test_sites.csv \\
-  --vertical dentists \\
+  --vertical #vertical \\
   --out data/results.jsonl
 ```

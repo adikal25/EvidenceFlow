@@ -1,3 +1,5 @@
+#Scraper agent where agent interacts with the web to fetch pages in given modules in csv file.
+
 from pydantic import ValidationError
 from src.llm.ollama_runtime import OllamaChat
 
@@ -51,7 +53,7 @@ def run_scraper_agent(domain: str, candidate_paths: List[str], *, llm: OllamaCha
 
     print(f"DEBUG: Starting scraper for domain: {domain}")
     
-    # Store fetched data
+    # Store fetched data locally
     pages = {}
     urls = {}
     
@@ -66,7 +68,6 @@ def run_scraper_agent(domain: str, candidate_paths: List[str], *, llm: OllamaCha
             messages.append({"role":"assistant","content":f"LLM error: {str(e)}"})
             continue
         
-        # Handle empty response
         if not out:
             print("DEBUG: Empty response from LLM")
             messages.append({"role":"assistant","content":"Empty response"})

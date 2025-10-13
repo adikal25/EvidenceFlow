@@ -1,7 +1,7 @@
 
 
 ## **System Overview**
-This is a **Data Validation Agent** that automatically detects business signals (expansion, hiring, scheduling) from websites and generates personalized outreach emails. It uses a multi-agent architecture with LLM-powered agents working in sequence.
+This is a **Signal Prototype Agent** that automatically detects business signals (expansion, hiring, scheduling) from websites and generates personalized outreach emails. It uses a multi-agent architecture with LLM-powered agents working in sequence.
 
 ---
 

@@ -11,7 +11,7 @@ def freshness_weight(published_at, weekly_decay=0.85, floor=0.3):
         return 1.0
     n = datetime.now(timezone.utc)
     weeks = max(0, (n - published_at).days / 7)
-    w = (weekly_decay ** weeks) if weeks else 1.0
+    w = (weekly_decay ** weeks) if weeks else 1.0 #penalizing older signals by decaying weights
     return max(floor, w)
 
 

@@ -16,7 +16,7 @@ __all__ = ["fetch", "extract_text", "sentences", "extract_date"]
 
 DEFAULT_HEADERS = {
     "User-Agent": (
-        "Data-Validation-Agent/1.0 (+https://example.local) "
+        "SignalProto-Agent/1.0 (+https://example.local) "
         "Mozilla/5.0"
     ),
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -26,7 +26,7 @@ DEFAULT_HEADERS = {
 
 def _make_session() -> requests.Session:
     s = requests.Session()
-    # Set a small connection pool; this is a CLI tool.
+    # Setting a small connection pool; this is a CLI tool.
     adapter = requests.adapters.HTTPAdapter( # type: ignore
         pool_connections=4, pool_maxsize=4, max_retries=3
     )
@@ -66,7 +66,6 @@ def fetch(
 
     return resp.text
 
-# ---- Parsing implementation (yours) ----
 
 def extract_text(html: str) -> str:
     try:

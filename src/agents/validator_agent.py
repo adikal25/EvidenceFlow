@@ -37,7 +37,7 @@ def run_validator_agent(
     print(f"DEBUG VALIDATOR: Pages available: {list(pages.keys())}")
     print(f"DEBUG VALIDATOR: Patterns: {patterns}")
     
-    # Extract text from HTML pages
+    # Extracting text from HTML pages
     text_pages = {}
     for path, html in pages.items():
         try:
