@@ -157,9 +157,9 @@ Run the pipeline again—expect a populated **Evidence Card** and **email draft*
 - **Pydantic** enforces strict schemas for Evidence Cards and email payloads.
 - **Ollama** enables local inference for validator and outbound generation, minimizing cost and maximizing privacy.
 
-# Future Improvements(Currently reiterating on how to best fit in)
+# Future Improvements
 
-- **Create a Natural language understanding interface** that maps user prompts to pre-defined **ICPs** across common verticals.
+- (ongoing) **Create a Natural language understanding interface** that maps user prompts to pre-defined **ICPs** across common verticals.
 - **Semantic scoring** with FAISS + reranker (still rethinking on how to go about it)
 - **CRM/marketing integrations** for automated workflows.
 
